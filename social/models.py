@@ -32,3 +32,27 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.follower} follows {self.following}"
+    
+class Movie(models.Model):
+    title = models.CharField(max_length=255)
+
+    release_year = models.PositiveIntegerField()
+
+    description = models.TextField(blank=True)
+
+    runtime = models.PositiveIntegerField(
+        help_text="Runtime in minutes"
+    )
+
+    language = models.CharField(
+        max_length=50,
+        default="English"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["title"]
+
+    def __str__(self):
+        return self.title
