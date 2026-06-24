@@ -17,8 +17,61 @@
 
     <p>{{ movie.description }}</p>
 
+    <hr>
+
+    <h2>Reviews</h2>
+
+    {% if user.is_authenticated %}
+
+        <h3>Write or Update Your Review</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Review</button>
+        </form>
+
+    {% else %}
+
+        <p>Please log in to write a review.</p>
+
+    {% endif %}
+
+    <hr>
+
+    {% if reviews %}
+
+        {% for review in reviews %}
+
+            <div>
+
+                <strong>{{ review.user.username }}</strong>
+
+                <p>
+                    Rating:
+                    {{ review.rating }}/10
+                </p>
+
+                <p>{{ review.review_text }}</p>
+
+                <small>
+                    {{ review.created_at }}
+                </small>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No reviews yet.</p>
+
+    {% endif %}
+
     <p>
-        <a href="/movies/">← Back to Movies</a>
+        <a href="{% url 'social:movie_list' %}">← Back to Movies</a>
     </p>
 
 </body>
