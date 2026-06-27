@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}CineSphere{% endblock %}</title>
+</head>
+<body>
+
+    <header>
+
+        <h1>
+            <a href="{% url 'social:movie_list' %}">
+                CineSphere
+            </a>
+        </h1>
+
+        <hr>
+
+    </header>
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</body>
+</html>

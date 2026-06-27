@@ -1,78 +1,66 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ movie.title }}</title>
-</head>
-<body>
+{% extends "social/base.html" %}
 
-    <h1>{{ movie.title }}</h1>
+{% block title %}
+{{ movie.title }} - CineSphere
+{% endblock %}
 
-    <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
+{% block content %}
 
-    <p><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
+<h2>{{ movie.title }}</h2>
 
-    <p><strong>Language:</strong> {{ movie.language }}</p>
+<p><strong>Release Year:</strong> {{ movie.release_year }}</p>
 
-    <p><strong>Description:</strong></p>
+<p><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
 
-    <p>{{ movie.description }}</p>
+<p><strong>Language:</strong> {{ movie.language }}</p>
 
-    <hr>
+<p><strong>Description:</strong></p>
 
-    <h2>Reviews</h2>
+<p>{{ movie.description }}</p>
 
-    {% if user.is_authenticated %}
+<hr>
 
-        <h3>Write or Update Your Review</h3>
+<h3>Leave a Review</h3>
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save Review</button>
-        </form>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
 
-    {% else %}
+    <button type="submit">
+        Submit Review
+    </button>
+</form>
 
-        <p>Please log in to write a review.</p>
+<hr>
 
-    {% endif %}
+<h3>Reviews</h3>
 
-    <hr>
+{% for review in reviews %}
 
-    {% if reviews %}
+<div>
 
-        {% for review in reviews %}
+    <strong>{{ review.user.username }}</strong>
 
-            <div>
+    rated it
 
-                <strong>{{ review.user.username }}</strong>
+    <strong>{{ review.rating }}/10</strong>
 
-                <p>
-                    Rating:
-                    {{ review.rating }}/10
-                </p>
+    <p>{{ review.review_text }}</p>
 
-                <p>{{ review.review_text }}</p>
+</div>
 
-                <small>
-                    {{ review.created_at }}
-                </small>
+<hr>
 
-            </div>
+{% empty %}
 
-            <hr>
+<p>No reviews yet.</p>
 
-        {% endfor %}
+{% endfor %}
 
-    {% else %}
+<p>
+    <a href="{% url 'social:movie_list' %}">
+        ← Back to Browse Movies
+    </a>
+</p>
 
-        <p>No reviews yet.</p>
-
-    {% endif %}
-
-    <p>
-        <a href="{% url 'social:movie_list' %}">← Back to Movies</a>
-    </p>
-
-</body>
-</html>
+{% endblock %}

@@ -49,6 +49,11 @@ class Movie(models.Model):
         default="English"
     )
 
+    genre = models.CharField(
+        max_length=100,
+        default="Unknown",
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
