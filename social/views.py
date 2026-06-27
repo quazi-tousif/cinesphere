@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
+from django.db.models import Avg, Count
+
 from .forms import ReviewForm
 from .models import Movie, Review
 
@@ -12,6 +14,11 @@ def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
 
     reviews = Review.objects.filter(movie=movie).select_related("user")
+
+    rating_stats = reviews.aggregate(
+        average_rating=Avg("rating"),
+        review_count=Count("id"),
+    )
 
     if request.method == "POST" and request.user.is_authenticated:
         form = ReviewForm(request.POST)
@@ -37,6 +44,8 @@ def movie_detail(request, movie_id):
         "movie": movie,
         "reviews": reviews,
         "form": form,
+        "average_rating": rating_stats["average_rating"],
+        "review_count": rating_stats["review_count"],
     }
 
     return render(request, "social/movie_detail.html", context)

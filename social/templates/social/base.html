@@ -1,21 +1,38 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}CineSphere{% endblock %}</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'social/style.css' %}"
+    >
 </head>
 <body>
 
-    <header>
+    <header class="site-header">
 
-        <h1>
+        <div class="logo">
+
             <a href="{% url 'social:movie_list' %}">
-                CineSphere
+                🎬 CineSphere
             </a>
-        </h1>
 
-        <hr>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'social:movie_list' %}">
+                Browse Movies
+            </a>
+
+        </nav>
 
     </header>
+
+    <hr>
 
     <main>
 

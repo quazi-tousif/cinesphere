@@ -6,6 +6,22 @@
 
 {% block content %}
 
+<style>
+
+.review{
+    background:#ffffff;
+    padding:15px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+.review h4{
+    margin-top:0;
+}
+
+</style>
+
 <h2>{{ movie.title }}</h2>
 
 <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
@@ -14,13 +30,36 @@
 
 <p><strong>Language:</strong> {{ movie.language }}</p>
 
+<p><strong>Genre:</strong> {{ movie.genre }}</p>
+
 <p><strong>Description:</strong></p>
 
 <p>{{ movie.description }}</p>
 
 <hr>
 
+<h3>Movie Rating</h3>
+
+<p>
+    <strong>Average Rating:</strong>
+
+    {% if average_rating %}
+        {{ average_rating|floatformat:1 }}/10
+    {% else %}
+        No ratings yet
+    {% endif %}
+</p>
+
+<p>
+    <strong>Total Reviews:</strong>
+    {{ review_count }}
+</p>
+
+<hr>
+
 <h3>Leave a Review</h3>
+
+{% if user.is_authenticated %}
 
 <form method="post">
     {% csrf_token %}
@@ -31,21 +70,31 @@
     </button>
 </form>
 
+{% else %}
+
+<p>Please log in to write a review.</p>
+
+{% endif %}
+
 <hr>
 
 <h3>Reviews</h3>
 
 {% for review in reviews %}
 
-<div>
+<div class="review">
 
-    <strong>{{ review.user.username }}</strong>
+    <h4>
+        {{ review.user.username }}
+    </h4>
 
-    rated it
+    <p>
+        ⭐ <strong>{{ review.rating }}/10</strong>
+    </p>
 
-    <strong>{{ review.rating }}/10</strong>
-
-    <p>{{ review.review_text }}</p>
+    <p>
+        {{ review.review_text }}
+    </p>
 
 </div>
 
