@@ -10,23 +10,26 @@ CineSphere
 
 {% for movie in movies %}
 
-<div class="movie">
+<div
+    class="movie"
+    onclick="window.location='{% url 'social:movie_detail' movie.id %}'"
+>
 
-<h2>
-<a href="{% url 'social:movie_detail' movie.id %}">
-{{ movie.title }}
-</a>
-</h2>
+    <h2>
+        <a href="{% url 'social:movie_detail' movie.id %}">
+            {{ movie.title }}
+        </a>
+    </h2>
 
-<p><strong>Year:</strong> {{ movie.release_year }}</p>
+    <p>
+        <strong>{{ movie.genre }}</strong>
+        •
+        {{ movie.release_year }}
+        •
+        {{ movie.runtime }} min
+    </p>
 
-<p><strong>Runtime:</strong> {{ movie.runtime }} minutes</p>
-
-<p><strong>Language:</strong> {{ movie.language }}</p>
-
-<p><strong>Genre:</strong> {{ movie.genre }}</p>
-
-<p>{{ movie.description }}</p>
+    <p>{{ movie.description }}</p>
 
 </div>
 

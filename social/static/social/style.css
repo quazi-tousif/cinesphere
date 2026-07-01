@@ -48,13 +48,14 @@ h1{
 }
 
 a{
-    text-decoration:none;
     color:#1565c0;
+    text-decoration:none;
 }
 
 a:hover{
     text-decoration:underline;
 }
+
 
 .site-header{
     display:flex;
@@ -81,4 +82,9 @@ nav a{
 .movie:hover{
     transform:translateY(-3px);
     box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+
+
+.movie{
+    cursor:pointer;
 }
